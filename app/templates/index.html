@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <!-- import jQuery cdn -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(() => {
+        // Sending AJAX GET request on page load
+        $.ajax({
+          url: "/data",
+          type: "GET",
+          contentType: "application/json",
+          applicationType: "json",
+          success: function (response) {
+            console.log("data: ", response.data);
+            document.getElementById("results").innerText = response.data;
+          },
+        });
+
+        // Sending AJAX POST request on button click
+        document.getElementById("submitBTN").addEventListener("click", () => {
+          let inputValue = document.getElementById("input").value;
+          console.log(inputValue);
+          $.ajax({
+            url: "/data",
+            type: "POST",
+            contentType: "application/json",
+            applicationType: "json",
+            data: JSON.stringify({ data: inputValue }),
+            success: (response) => {
+              document.getElementById("results").innerText = response.upper;
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Results:</h1>
+    <input type="text" id="input" />
+    <button id="submitBTN">Submit</button>
+    <h4 id="results"></h4>
+  </body>
+</html>
